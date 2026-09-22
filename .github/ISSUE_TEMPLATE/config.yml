@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Question or idea
+    url: https://github.com/Gvasi/career-portfolio-template/issues/new?template=question.yml
+    about: Ask how to customise something, or share what you built from the template.
+  - name: Security report
+    url: https://github.com/Gvasi/career-portfolio-template/blob/main/SECURITY.md
+    about: Please report vulnerabilities privately, as described in SECURITY.md.

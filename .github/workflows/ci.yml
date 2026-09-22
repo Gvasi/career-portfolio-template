@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Typecheck, lint, unit tests, build, browser tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      # pnpm version comes from package.json "packageManager"; installed before Node so the cache resolves.
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # typegen + tsc, eslint, Node unit tests, portrait pre-encode + next build
+      - run: pnpm check
+
+      - run: pnpm exec playwright install --with-deps chromium
+
+      - name: Browser tests against the production build
+        env:
+          PLAYWRIGHT_SERVER: production
+          PLAYWRIGHT_HTML_OPEN: never
+        run: pnpm test:e2e --workers=1 --reporter=github,html --trace=retain-on-failure
+
+      - name: Contact submissions against a development server
+        env:
+          PLAYWRIGHT_PORT: 3101
+        run: pnpm test:e2e tests/e2e/contact-email-flow.spec.ts tests/e2e/contact-booking-flow.spec.ts --workers=1 --reporter=github --trace=retain-on-failure
+
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        if: failure()
+        with:
+          name: playwright-${{ github.run_id }}
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+          retention-days: 7

@@ -1,0 +1,21 @@
+.composition { position:relative; width:100%; height:100%; pointer-events:none; }
+.object { object-fit:contain; }
+.laptop { position:absolute; inset:0; width:100%; height:100%; }
+.canvas { position:absolute; left:50%; top:50%; width:1448px; height:1086px; transform-origin:center; transition:none; }
+.frame { position:absolute; inset:0; width:1448px; height:1086px; }
+.screen { position:absolute; top:0; left:0; width:1265px; height:791px; transform-origin:0 0; transform:matrix3d(0.8159671352,-0.0188357966,0,0.0000434025,0.0473664733,0.7433779403,0,-0.0000054353,0,0,1,0,86,104,0,1); transition:none; overflow:hidden; background:#fff; }
+.screen img { width:1265px; height:791px; }
+.phone { position:absolute; left:1160px; top:375px; width:235px; height:422px; padding:43px 19px 17px; border:9px solid #102e48; border-radius:40px; background:#fff; box-shadow:0 2px 0 3px #9ca9b3,0 20px 25px #06254a38; transform:rotate(7deg); text-align:center; }
+.phone>i { position:absolute; top:12px; left:30%; width:40%; height:10px; border-radius:8px; background:#142c40; }.phone>strong { display:block; font-size:22px; color:var(--c-navy); line-height:1.2; margin-bottom:15px; }.phone>img { width:170px; height:235px; object-fit:cover; border-radius:18px; }.phone>span { display:block; font-size:13px; margin-top:12px; color:#526d7e; }.phone>b { display:block; height:14px; width:92px; background:var(--c-teal-ink); border-radius:12px; margin:15px auto 0; }
+.composition[data-preview="true"] .laptop { width:100%; height:100%; }
+.composition[data-preview="true"] .canvas { top:117%; }
+.composition[data-preview="true"] .object { object-fit:cover; object-position:center 40%; }
+@media(min-width:768px) {
+ .composition[data-preview="true"] .laptop { width:100%; height:100%; }
+ .composition[data-preview="true"] .canvas { top:50%; }
+ .composition[data-preview="true"] .object,.composition[data-preview="true"][data-art-project] .object { object-fit:contain; object-position:center; transform:none; padding:3px; }
+}
+@media(max-width:767px) {
+ .composition[data-preview="true"] .laptop { width:100%; height:100%; }.composition[data-preview="true"] .canvas { top:50%; }
+ .composition[data-preview="true"] .object { object-fit:contain; object-position:center; transform:scale(1.1); }.composition[data-preview="true"][data-art-project] .object { object-position:center; transform:scale(1.1); }
+}

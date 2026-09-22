@@ -1,0 +1,19 @@
+.page { max-width:760px; margin-inline:auto; padding:56px 28px 72px; color:#06254a; }
+.page h1 { margin:0 0 16px; font-size:36px; font-weight:600; line-height:1.2; letter-spacing:-.025em; }
+.page p { margin:0; font-size:16px; line-height:1.7; color:#445b70; text-wrap:pretty; }
+.page .intro { max-width:58ch; }
+.page section { margin-top:32px; scroll-margin-top:96px; }
+.page h2 { margin:0 0 8px; font-size:18px; font-weight:600; line-height:1.4; letter-spacing:-.015em; text-wrap:balance; }
+.page a { color:#0b766b; text-decoration:underline; text-underline-offset:4px; }
+.page p + p { margin-top:12px; }
+.page a:focus-visible { outline:2px solid #118578; outline-offset:4px; }
+.details { margin-top:4px; }
+.details summary { width:fit-content; min-height:44px; display:list-item; align-content:center; padding:10px 0; color:#0b766b; font-size:14px; font-weight:500; cursor:pointer; }
+.details summary::marker { font-size:11px; }
+.details summary:focus-visible { outline:2px solid #118578; outline-offset:4px; border-radius:2px; }
+.details > div { padding-top:8px; }
+@media (max-width:640px) {
+  .page { padding:40px 24px 56px; }
+  .page h1 { font-size:32px; }
+  .page section { margin-top:28px; }
+}

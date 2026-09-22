@@ -1,0 +1,28 @@
+name: Bug report
+description: Something in the template does not work as documented.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What did you do, what did you expect, what happened instead?
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Page or file
+      placeholder: e.g. /contact on a phone, or src/content/projects.ts
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: Node version, pnpm version, browser, viewport size
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I ran `pnpm check` on a clean install and the problem is still there.
+        - label: I searched existing issues.

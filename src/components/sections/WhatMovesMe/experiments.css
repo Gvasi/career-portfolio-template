@@ -1,0 +1,177 @@
+/* One floating surface. The objects themselves are the controls. */
+.mindset-labs { max-width:1040px; margin:auto; color:var(--c-navy); }
+.mindset-labs svg { shape-rendering:geometricPrecision; }
+.mindset-card-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:30px; }
+.mindset-card-slot { min-width:0; perspective:1100px; padding-block:5px; flex-direction:column; }
+.mindset-thought-card { --thought-accent:var(--c-teal-ink); --scene-glow:#dfc6872b; position:relative; aspect-ratio:1.7; padding:18px 25px 14px; display:flex; flex-direction:column; border-radius:30px; border:1px solid #dce5e9; background:linear-gradient(145deg,#fbfcfd,#f3f5f8); box-shadow:inset 0 1px 1px #fff,0 2px 3px #06254a04,0 18px 32px -25px #06254a4d; transition:box-shadow .35s,border-color .35s; }
+.mindset-thought-card[data-tone="ai"] { --scene-glow:#71b3d125; }
+.mindset-thought-card[data-tone="people"] { --scene-glow:#73b9a016; }
+.mindset-thought-card[data-tone="proof"] { --scene-glow:#d1b86922; }
+.mindset-thought-card:hover { border-color:#bccbd4; box-shadow:inset 0 1px #fff,0 5px 6px #06254a04,0 25px 45px -26px #06254a4d; }
+.thought-card-light { position:absolute; inset:0; border-radius:inherit; pointer-events:none; background:linear-gradient(125deg,#ffffff60,transparent 60%); }
+.thought-card-header { position:relative; flex:none; }
+.mindset-lab-label { display:flex; justify-content:space-between; align-items:center; gap:12px; color:#536d79; font-size:11px; }
+.mindset-lab-label>span:first-child { display:flex; align-items:center; gap:8px; }
+.mindset-lab-label svg { color:var(--c-teal-ink); }
+.mindset-lab-label>span:last-child { font:9px var(--font-fira-code),monospace; }
+#what-moves-me .thought-card-header h3 { margin:10px 0 0; font-size:24px; line-height:1.25; font-weight:600; letter-spacing:-.04em; color:var(--c-navy); }
+.thought-scene { position:relative; display:flex; flex-direction:column; flex:1; min-height:0; margin-top:8px; }
+.thought-body { display:block; color:#092e50; font-size:16px; line-height:1.45; font-weight:600; letter-spacing:-.02em; text-align:center; }
+.curiosity-copy,.ai-layer,.conversation-content,.proof-page { display:block; flex:none; min-height:34px; padding:6px 0 4px; }
+.thought-controls { display:flex; justify-content:space-between; align-items:center; gap:8px; flex:none; min-height:36px; font-size:9px; color:#536d79; }
+.thought-controls>span:first-child { display:flex; align-items:center; gap:7px; }
+.thought-controls svg { color:var(--c-teal-ink); flex:none; }
+.thought-progress { display:flex; gap:4px; align-items:center; white-space:nowrap; }
+.thought-progress>i { width:4px; height:4px; border-radius:4px; background:#bbced1; transition:width .25s,background .25s; }
+.thought-progress>i[data-active="true"] { width:14px; background:var(--c-teal-ink); }
+.thought-progress>span { margin-left:5px; font:8px var(--font-fira-code),monospace; color:#31566c; }
+.thought-progress b { font-weight:400; color:#536d79; }
+.mindset-art { position:relative; flex:1; width:100%; height:100%; min-height:0; pointer-events:none; }
+.mindset-art::before { content:''; position:absolute; inset:2% 15% 0; background:radial-gradient(ellipse,var(--scene-glow),transparent 70%); }
+.mindset-art svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.ai-glass,.conversation-room { display:flex; flex:1; min-height:0; flex-direction:column; align-items:stretch; }
+.ai-scrubber { position:relative; flex:none; }
+.ai-scrubber label { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+.ai-scrubber input { display:block; appearance:none; width:100%; height:36px; background:transparent; cursor:ew-resize; margin:0; touch-action:pan-y; }
+.ai-scrubber input::-webkit-slider-runnable-track { height:3px; border-radius:4px; background:linear-gradient(90deg,var(--c-teal-ink) var(--range-progress,0%),#bad0d5 var(--range-progress,0%)); }
+.ai-scrubber input::-webkit-slider-thumb { appearance:none; transform:translateX(var(--thumb-invite-x,0px)); width:23px; height:23px; margin-top:-10px; border:5px solid #f8fafb; border-radius:8px; background:#236d78; box-shadow:0 2px 3px #06254a25,0 0 0 1px #97bfbd,0 0 0 var(--thumb-halo,0px) #11857828; }
+.ai-scrubber input::-moz-range-track { height:3px; border-radius:4px; background:linear-gradient(90deg,var(--c-teal-ink) var(--range-progress,0%),#bad0d5 var(--range-progress,0%)); }
+.ai-scrubber input::-moz-range-thumb { box-sizing:border-box; transform:translateX(var(--thumb-invite-x,0px)); width:23px; height:23px; border:5px solid #f8fafb; border-radius:8px; background:#236d78; box-shadow:0 2px 3px #06254a25,0 0 0 1px #97bfbd,0 0 0 var(--thumb-halo,0px) #11857828; }
+.ai-milestones { display:flex; justify-content:space-between; color:#536d79; font-size:9px; padding:3px 0 2px; }
+.ai-milestones [data-active="true"] { color:#086c61; font-weight:600; }
+.conversation-choices { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; flex:none; }
+.conversation-choices button { display:flex; position:relative; align-items:center; justify-content:center; min-height:35px; gap:5px; border:1px solid #c8dcde; border-radius:11px; background:#f9fcfc80; color:#315b64; cursor:pointer; transition:background .25s,border-color .25s; }
+.conversation-choices button span { font-size:9px; white-space:nowrap; }
+.conversation-choices button svg { flex:none; color:var(--c-teal-ink); }
+.conversation-choices button[aria-pressed="true"] { color:#066b60; border-color:#82b8ad; background:#e4f2ee; }
+.conversation-scene .thought-controls { display:none; }
+.thought-scene[data-cue="true"] .conversation-choices button:nth-child(2) { animation:response-invite 2.8s cubic-bezier(.4,0,.2,1) both; }
+.conversation-dot { animation:thinking-dot 2.8s ease-in-out infinite; }
+/* The entire scene is spatial; no instruction row or page controls. */
+.miniature-scene { position:relative; display:block; flex:1; min-height:0; width:100%; }
+.miniature-scene>svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+/* Only the illustrated field captures gestures; its empty margins remain scrollable. */
+.curiosity-lens { padding:0; border:0; border-radius:18px; background:transparent; pointer-events:none; cursor:default; touch-action:none; }
+.curiosity-pointer-zone { pointer-events:all; cursor:grab; }
+.curiosity-lens:active .curiosity-pointer-zone { cursor:grabbing; }
+.curiosity-scene .curiosity-copy,.proof-scene .proof-page { padding-bottom:10px; }
+.flight-story { position:relative; }
+.flight-story-action { position:absolute; inset:0; border:0; padding:0; border-radius:16px; background:transparent; }
+.flight-story-action>svg { width:100%; height:100%; overflow:visible; pointer-events:none; }
+.flight-story-action[aria-disabled="true"] { cursor:default; }
+
+
+.proof-scene .proof-page { padding-right:88px; }
+.proof-scene .proof-page .thought-body { text-align:left; }
+.launch-control { position:absolute; right:0; bottom:-33px; width:78px; height:44px; border:0; padding:4px 0; background:transparent; cursor:pointer; border-radius:12px; z-index:2; touch-action:manipulation; }
+.launch-key { display:flex; align-items:center; justify-content:center; gap:5px; height:34px; border-radius:10px; color:#FFF9F3; border:1px solid #A6433B; background:linear-gradient(155deg,#DA8070,#B95348 75%); box-shadow:inset 0 1px #F1B5A2,0 3px 0 #813C37,0 6px 10px #722F3020; font-size:9px; font-weight:500; transition:transform .15s,box-shadow .15s; }
+.launch-key i { width:4px; height:4px; border-radius:50%; background:#FFF0D5; box-shadow:0 0 5px #FFF0D560; }
+.launch-control:active .launch-key { transform:translateY(2px); box-shadow:inset 0 1px #F1B5A2,0 1px 0 #813C37; }
+.launch-control[aria-disabled="true"] { cursor:default; }
+.flight-story[data-cue="true"][data-running="false"]:not([data-stage="3"]) .launch-key { animation:launch-invite 2.8s cubic-bezier(.4,0,.2,1) both; }
+.rocket-exhaust { animation:exhaust .22s ease-in-out infinite alternate; transform-box:fill-box; transform-origin:right center; }
+@keyframes launch-invite { 0%,40%,60%,100% { transform:translateY(0); } 20% { transform:translateY(2px); } 80% { transform:translateY(1.5px); } }
+@keyframes exhaust { from { transform:scaleX(.86); } to { transform:scaleX(1); } }
+
+
+.conversation-choices button { padding:0 10px 0 4px; transition:background-color .4s,border-color .4s,box-shadow .4s,transform .45s cubic-bezier(.4,0,.2,1); }
+
+.conversation-choices button[aria-pressed="true"] { border-color:#8cb5ac; background:#edf4f2; }
+@media(hover:hover) { .conversation-choices button:hover { transform:translateY(-2px); background:#f2f6f6; border-color:#82afa7; } }
+.conversation-choices button:active { transform:translateY(1px); }
+.mindset-labs button:focus-visible,.ai-scrubber input:focus-visible { outline:2px solid var(--c-teal-ink); outline-offset:4px; }
+.art-breathe { animation:art-breathe 5s ease-in-out infinite; }
+.robot-eye { transform-box:fill-box; transform-origin:center; animation:robot-blink 6s infinite; }
+.mindset-art[data-active="false"] .art-breathe,.mindset-art[data-active="false"] .robot-eye,.mindset-art[data-active="false"] .conversation-dot { animation-play-state:paused; }
+@keyframes response-invite { 0%,40%,60%,100% { transform:translateY(0); } 20% { transform:translateY(-4px); } 80% { transform:translateY(-3px); } }
+@keyframes thinking-dot { 0%,100% { opacity:.5; } 50% { opacity:1; } }
+@keyframes art-breathe { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-2px); } }
+@keyframes robot-blink { 0%,43%,47%,100% { transform:scaleY(1); } 45% { transform:scaleY(.15); } }
+.mindset-lab-selector,.mindset-mobile-footer { display:none; }
+@media(min-width:768px) and (max-width:1199px) { .mindset-labs { margin-right:40px; } }
+@media(min-width:768px) and (max-width:1100px) {
+ .mindset-selection-ink { position:absolute; inset:-1px; z-index:-1; background:#e8f4f0; border:1px solid #90bfb5; border-radius:12px; }
+ .mindset-thought-card { aspect-ratio:1.5; padding:15px 19px 12px; }
+ #what-moves-me .thought-card-header h3 { font-size:21px; }.mindset-lab-label { font-size:10px; }
+ .thought-body { font-size:13px; }.curiosity-copy,.ai-layer,.conversation-content,.proof-page { min-height:29px; }
+ .conversation-choices button { gap:3px; }.conversation-choices button span { font-size:7px; }.conversation-choices button svg { width:11px; }
+
+}
+@media(max-width:767px) {
+ .mindset-card-grid { grid-template-columns:1fr; gap:0; }.mindset-card-slot { grid-area:1/1; }
+ .mindset-lab-selector { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding-bottom:14px; }
+ .mindset-lab-selector button { position:relative; isolation:isolate; display:flex; gap:6px; align-items:center; justify-content:center; min-height:44px; border:1px solid #d6e4e6; border-radius:12px; background:#f6f9fa; color:#536d79; font-size:11px; cursor:pointer; }
+ .mindset-lab-selector button[aria-pressed="true"] { color:#086e64; border-color:transparent; background:transparent; }
+ .mindset-selection-ink { position:absolute; inset:-1px; z-index:-1; background:#e8f4f0; border:1px solid #90bfb5; border-radius:12px; }
+ .mindset-thought-card { aspect-ratio:1.5; padding:13px 18px 10px; border-radius:25px; }
+ #what-moves-me .thought-card-header h3 { font-size:20px; margin-top:8px; }.mindset-lab-label { font-size:10px; }
+ .thought-scene { margin-top:4px; }.thought-body { font-size:12.5px; }.proof-scene .proof-page { padding-right:80px; }.launch-control { width:72px; bottom:-31px; }.launch-key { font-size:8px; }
+ .curiosity-copy,.ai-layer,.conversation-content,.proof-page { min-height:28px; padding:5px 0 3px; }
+ .thought-controls { font-size:8px; min-height:30px; }.thought-progress>span { font-size:7px; }.thought-progress>i { width:3px; height:3px; }
+ .ai-scrubber input { height:44px; }.ai-milestones { font-size:8px; }
+ .conversation-choices { gap:4px; }.conversation-choices button { flex-direction:column; min-height:44px; gap:3px; padding:0 2px; }.conversation-choices button span { font-size:7.5px; }
+
+ .mindset-mobile-footer { display:flex; justify-content:space-between; margin:12px 5px 0; color:#536d79; font-size:9px; }.mindset-mobile-footer>span:last-child { display:flex; align-items:center; gap:8px; font:9px var(--font-fira-code),monospace; }
+}
+@media(min-width:768px) and (max-width:850px) {
+ .thought-body { font-size:12px; }
+ .proof-scene .proof-page { padding-right:80px; }
+ .launch-control { width:72px; }.launch-key { font-size:8px; }
+}
+@media(max-width:359px) {
+ .mindset-thought-card { aspect-ratio:1.44; padding:10px 14px 9px; }#what-moves-me .thought-card-header h3 { font-size:18px; }.mindset-lab-label { font-size:9px; }
+ .thought-body { font-size:10.7px; }.curiosity-copy,.ai-layer,.conversation-content,.proof-page { min-height:25px; }.thought-controls { font-size:7px; }.thought-progress>i { display:none; }
+ .conversation-choices button span { font-size:6.8px; }
+}
+@media(prefers-reduced-motion:reduce) { .mindset-labs * { transition:none!important; animation:none!important; } }
+
+/* Keep the optical field registered with its frame; Motion already smooths the pointer. */
+.curiosity-lens svg g { transition:none; }
+
+@media(prefers-reduced-motion:reduce) { .ai-scrubber input::-webkit-slider-thumb { transform:none!important; }.ai-scrubber input::-moz-range-thumb { transform:none!important; } }
+
+/* A small local demonstration, never a page-wide loop. */
+.launch-invitation-hand { position:absolute; right:10px; top:20px; width:23px; height:29px; opacity:0; pointer-events:none; filter:drop-shadow(0 2px 2px #06254a24); transform:translate(5px,8px) rotate(-12deg); z-index:3; }
+.flight-story[data-cue="true"][data-running="false"]:not([data-stage="3"]) .launch-invitation-hand { animation:launch-hand-invite 2.8s cubic-bezier(.4,0,.2,1) both; }
+@keyframes launch-hand-invite { 0%,100% { opacity:0; transform:translate(5px,8px) rotate(-12deg); } 12%,65% { opacity:1; transform:translate(0,0) rotate(-12deg); } 20%,80% { opacity:1; transform:translate(0,2px) rotate(-12deg); } 40%,90% { opacity:1; transform:translate(0,0) rotate(-12deg); } }
+@media(prefers-reduced-motion:reduce) { .launch-invitation-hand { display:none; } }
+
+/* Let the scene grow with its labels instead of miniaturizing its instructions. */
+.mindset-lab-label, .mindset-lab-label>span:last-child, .thought-controls, .thought-progress>span, .ai-milestones, .mindset-mobile-footer, .mindset-mobile-footer>span:last-child { font-size:var(--type-label); }
+.mindset-thought-card { aspect-ratio:auto; height:100%; min-height:330px; }
+.conversation-choices button { min-height:44px; }
+.conversation-choices button span { font-size:var(--type-label); }
+.conversation-scene .thought-body { font-size:var(--type-caption); font-weight:500; }
+.conversation-choices button { gap:5px; padding:4px 6px; }
+
+.launch-key { font-size:var(--type-label); }
+.thought-body { overflow-wrap:normal; word-break:normal; text-wrap:balance; }
+@media(max-width:1100px) {
+  .mindset-thought-card { aspect-ratio:auto; min-height:350px; }
+  .thought-body { font-size:var(--type-caption); line-height:1.5; }
+  .conversation-choices button { flex-direction:row; gap:0; padding:4px; }
+  .conversation-choices button svg { display:none; }
+
+  .proof-scene .proof-page { padding-right:0; padding-bottom:48px; }
+  .proof-scene .proof-page .thought-body { text-align:center; }
+  .launch-control { bottom:0; right:calc(50% - 46px); width:92px; }
+}
+@media(max-width:767px) {
+  .mindset-lab-selector button { font-size:var(--type-label); gap:4px; }
+  .mindset-thought-card { min-height:360px; padding-block:16px; }
+  .thought-card-header { min-height:58px; }
+  .thought-scene { margin-top:8px; }
+  .curiosity-copy,.ai-layer,.conversation-content,.proof-page { display:grid; align-items:center; min-height:48px; padding:4px 0; }
+  .curiosity-scene .curiosity-copy { padding-bottom:4px; }
+  .proof-scene .proof-page { padding:4px 0; }
+  .flight-story { display:flex; flex-direction:column; gap:10px; }
+  .flight-story-action { position:relative; flex:1; min-height:150px; }
+  .flight-story-action>svg { position:absolute; inset:0; }
+  .flight-stop text { font-size:14px; }
+  .launch-control { position:relative; inset:auto; align-self:center; flex:none; width:104px; margin-bottom:6px; }
+  .launch-key { height:36px; }
+}
+@media(max-width:359px) {
+  .mindset-lab-selector button { flex-direction:column; gap:2px; padding:5px 0; }
+  .mindset-thought-card { min-height:360px; }
+}

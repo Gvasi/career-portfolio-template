@@ -1,0 +1,34 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+*.tsbuildinfo
+
+# environment files (only the blank example is tracked)
+.env*
+!.env.example
+
+# hosting links and local tooling
+.vercel
+.playwright-cli/
+.playwright-mcp/
+
+# test and build output (golden fixtures live beside their specs, not here)
+/test-results/
+/playwright-report/
+/coverage
+/output/
+
+# logs and OS files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.DS_Store
+*.pem

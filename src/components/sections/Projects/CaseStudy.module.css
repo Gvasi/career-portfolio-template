@@ -1,0 +1,210 @@
+
+.viewer { --accent:var(--c-teal-ink); display:flex; flex-direction:column; flex:1; min-height:0; padding:0 26px; color:var(--c-navy); }
+.viewer[data-status="in-progress"] { --accent:#26729a; }.viewer[data-status="concept"] { --accent:#926b20; }
+.header { display:grid; grid-template-columns:minmax(0,1fr) auto auto; align-items:center; gap:20px; flex:none; padding:24px 58px 22px 0; border-bottom:1px solid #dce7eb; }
+.projectIdentity { display:flex; align-items:center; gap:14px; min-width:0; }
+.thumbnail { width:64px; height:52px; flex:none; border-radius:10px; padding:5px; background:var(--surface-ink); box-shadow:inset 0 0 0 1px #ffffff25; }.thumbnail img { width:100%; height:100%; object-fit:contain; border-radius:4px; }
+.identity { min-width:0; }.titleLine { display:flex; align-items:center; gap:9px; flex-wrap:wrap; }.identity h2 { font-size:24px; line-height:1.15; letter-spacing:-.04em; font-weight:600; }.identity p { margin-top:7px; color:#617789; font-size:11px; line-height:1.5; }
+.projectStatus { display:inline-flex; align-items:center; gap:5px; color:var(--accent); font-size:10px; white-space:nowrap; }.projectStatus i { width:5px; height:5px; border-radius:50%; background:currentColor; }
+
+.tabs { position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; padding:4px; border:1px solid #d9e6e8; border-radius:15px; background:#f2f4f7; }
+.tabs button { position:relative; min-height:44px; padding:0 12px; border-radius:11px; color:#506e7c; cursor:pointer; font-size:14px; font-weight:500; white-space:nowrap; }
+.tabLabel { display:flex; position:relative; z-index:1; align-items:center; justify-content:center; gap:8px; }.tabLabel>svg { flex:none; color:#5c7486; transition:transform .45s cubic-bezier(.4,0,.2,1),color .4s; }.tabs button:hover .tabLabel>svg { transform:translateY(-2px); }
+.tabActive { position:absolute; top:4px; bottom:4px; left:4px; width:calc((100% - 8px) / 3); border-radius:11px; background:#15334f; box-shadow:0 3px 7px #06254a20,inset 0 1px #ffffff19; pointer-events:none; transition:transform .36s cubic-bezier(.22,1,.36,1); }.tabs button[aria-selected="true"] { color:white; }.tabs button[aria-selected="true"] .tabLabel>svg { color:#c5e0da; }
+.panel { flex:1; min-height:0; overflow-y:auto; overflow-x:hidden; overscroll-behavior:contain; scrollbar-width:thin; padding:24px 0; }
+.view { height:100%; min-height:0; }
+.eyebrow { display:block; font:10px var(--font-fira-code),monospace; letter-spacing:.035em; color:var(--accent); margin-bottom:10px; }
+.overviewIntro { margin-bottom:24px; }.overviewIntro h3 { font-size:30px; line-height:1.25; letter-spacing:-.04em; font-weight:600; max-width:100%; }.overviewIntro p { margin-top:10px; color:#526d7e; font-size:14px; line-height:1.65; max-width:100%; }
+.faces { display:grid; flex:1; min-width:0; overflow:clip; }
+.frontFace,.backFace { grid-area:1/1; min-width:0; transition:opacity .32s ease,transform .4s cubic-bezier(.22,1,.36,1),visibility .4s; }
+.frontFace { display:flex; flex-direction:column; justify-content:center; }.frontFace h4 { font-size:24px; line-height:1.35; letter-spacing:-.035em; font-weight:500; max-width:20ch; }
+.backFace { opacity:0; visibility:hidden; transform:translateX(16px); pointer-events:none; }.backFace p { font-size:14px; line-height:1.65; }
+[data-open="true"]>.faces>.frontFace { opacity:0; visibility:hidden; transform:translateX(-16px); pointer-events:none; }
+[data-open="true"]>.faces>.backFace { opacity:1; visibility:visible; transform:translateX(0); pointer-events:auto; }
+.revealAction { position:relative; isolation:isolate; overflow:hidden; flex:none; display:flex; width:100%; align-items:center; justify-content:space-between; gap:10px; min-height:46px; padding:8px 10px 8px 15px; border:1px solid #123e59; border-radius:13px; background:var(--surface-ink); color:white; text-align:left; font-size:12px; font-weight:500; cursor:pointer; box-shadow:0 5px 10px -7px #06254a99,inset 0 1px #ffffff16; transition:color .45s,border-color .5s,box-shadow .5s,transform .5s cubic-bezier(.4,0,.2,1); }
+.revealAction::before { content:''; position:absolute; inset:0; z-index:-1; border-radius:inherit; background:linear-gradient(120deg,#167b70,#10685f); opacity:0; transition:opacity .6s cubic-bezier(.4,0,.2,1); }.revealAction:focus-visible::before { opacity:1; }.revealAction:focus-visible { border-color:#267e75; box-shadow:0 6px 14px -8px #06254a99,inset 0 1px #ffffff16; }
+@media(hover:hover) and (pointer:fine) { .revealAction:hover::before { opacity:1; }.revealAction:hover { border-color:#267e75; box-shadow:0 6px 14px -8px #06254a99,inset 0 1px #ffffff16; } }.actionIcon { position:relative; display:grid; place-items:center; flex:none; width:27px; height:27px; border-radius:50%; background:#ffffff14; }.actionIcon svg { transition:transform .6s cubic-bezier(.4,0,.2,1); }.actionIcon::after { content:''; position:absolute; inset:-2px; border-radius:50%; border:1px solid #b4e2d4; opacity:0; }
+[data-open="true"]>.revealAction { border-color:#385769; }[data-open="true"]>.revealAction svg { transform:rotate(180deg); }
+.decisionShell[data-open="false"][data-animated="true"] .actionIcon::after { animation:decisionCue 2.8s ease-out 1; }.decisionSlide:nth-child(2) .actionIcon::after { animation-delay:.8s; }.decisionSlide:nth-child(3) .actionIcon::after { animation-delay:1.6s; }
+@keyframes decisionCue { 0%,55%,100% { opacity:0; transform:scale(.8); } 65% { opacity:.55; transform:scale(1); } 88% { opacity:0; transform:scale(1.45); } }
+.sectionIntro { margin-bottom:20px; }.sectionIntro h3 { font-size:25px; font-weight:600; letter-spacing:-.035em; }
+.decisionGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; }
+.decisionShell { display:flex; flex-direction:column; gap:16px; padding:20px; border:1px solid #d8e1e8; border-radius:22px; background:linear-gradient(145deg,#fcfdfe,#f3f6f8); box-shadow:0 3px 0 -1px #fff,0 4px 0 -1px #d4dfe6,0 15px 25px -23px #06254a80; color:#153951; transition:box-shadow .35s,border-color .35s; }
+.decisionShell:hover { border-color:#adbeca; box-shadow:0 3px 0 -1px #fff,0 4px 0 -1px #d4dfe6,0 18px 30px -24px #06254a75; }.decisionShell[data-open="true"] { border-color:#8bafa8; }
+.decisionQuestion { min-height:58px; display:flex; align-items:flex-start; gap:10px; padding-bottom:17px; border-bottom:1px solid #d6e5e4; }.decisionQuestion svg { flex:none; color:var(--accent); margin-top:2px; }.decisionQuestion p { font-size:13px; line-height:1.55; color:#516e7a; }
+.decisionShell .faces { min-height:135px; }.decisionShell .frontFace h4 { font-size:22px; }.decisionShell .backFace p { font-size:12px; line-height:1.65; }
+.tradeoff { margin-top:15px; padding-left:12px; border-left:2px solid #afd3ca; }.tradeoff>span { display:block; font:10px var(--font-fira-code),monospace; color:#3c746b; margin-bottom:6px; }.tradeoff p { color:#506b7c; }
+.stack { display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr); gap:24px; height:100%; min-height:290px; }.toolLibrary { min-width:0; display:flex; flex-direction:column; min-height:0; }
+.libraryHeading { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px; color:#526b7b; font:11px var(--font-fira-code),monospace; }.libraryHeading>span:last-child { color:var(--accent); }
+.toolGrid { position:relative; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; align-content:start; overflow:auto; overscroll-behavior:contain; scrollbar-width:thin; padding:4px; min-height:0; }
+.toolGrid button { display:flex; align-items:center; gap:11px; min-height:74px; padding:12px; text-align:left; border:1px solid #d9e6e9; background:#f7fafb; border-radius:14px; color:#254961; font-size:12px; cursor:pointer; transition:background .25s,border-color .25s,box-shadow .25s; }.toolGrid button[aria-pressed="true"] { background:#f0f5f5; border-color:var(--c-teal-ink); box-shadow:0 0 0 1px #11857818; }.toolGrid button:hover { border-color:#86bcb3; }
+.toolIcon { display:grid; place-items:center; flex:none; width:30px; height:30px; }.toolIcon svg { width:100%; height:100%; }
+.toolDetail { min-width:0; padding:24px; border-radius:20px; background:var(--surface-ink); color:white; overflow:auto; scrollbar-width:thin; }
+.toolDetailHeader { display:flex; align-items:center; gap:14px; padding-bottom:20px; border-bottom:1px solid #ffffff24; }.toolDetailHeader>.toolIcon { width:46px; height:46px; padding:7px; border-radius:12px; background:#fff; }.toolDetailHeader h3 { font-size:23px; line-height:1.2; letter-spacing:-.03em; font-weight:500; }.toolDetailHeader p { margin-top:6px; color:var(--surface-ink-secondary); font-size:12px; }
+.toolExplanation { margin-top:20px; }.toolExplanation>span { color:#9bddce; font:10px var(--font-fira-code),monospace; }.toolExplanation p { margin-top:8px; color:#eef5f6; font-size:14px; line-height:1.7; }
+.toolDetailHeader > .toolIcon { color:var(--c-navy); }
+
+.viewer :is(button,a):focus-visible,.panel:focus-visible { outline:2px solid var(--c-teal-ink); outline-offset:3px; }
+@media(min-width:768px) and (max-width:1023px) { .header { gap:12px; }.thumbnail { display:none; }.identity h2 { font-size:21px; }.tabs { gap:2px; }.tabs button { padding:0 9px; font-size:13px; }.decisionGrid { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }.decisionShell { padding:18px; } }
+@media(max-width:767px) {
+ .viewer { padding:0 18px; }.header { grid-template-columns:minmax(0,1fr) auto; gap:14px 10px; padding:22px 0 0; }.projectIdentity { grid-column:1/-1; margin-right:48px; gap:12px; }.header:has(>.visit) .projectIdentity { margin-right:100px; }.header:has(>.visit) .thumbnail { display:none; }.thumbnail { width:56px; height:48px; }.identity h2 { font-size:20px; }.identity p { font-size:10px; }.titleLine { gap:6px; }.projectStatus { font-size:9px; }
+ .tabs { grid-column:1/-1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:3px; width:100%; margin-bottom:15px; }.tabs button { padding:0 7px; font-size:13px; min-height:44px; }.tabLabel { gap:7px; }.tabLabel svg { width:16px; }.header>.visit { position:absolute; top:20px; right:70px; }
+
+ .panel { padding:20px 0; }.view { height:auto; min-height:100%; }
+ .overviewIntro { margin-bottom:18px; }.overviewIntro h3 { font-size:25px; max-width:23ch; }.overviewIntro p { margin-top:9px; font-size:12px; line-height:1.6; }
+
+ .sectionIntro { margin-bottom:16px; }.sectionIntro h3 { font-size:22px; }.decisionGrid { grid-template-columns:1fr; gap:12px; }.decisionShell { padding:18px; gap:14px; border-radius:16px; }.decisionQuestion { min-height:0; padding-bottom:13px; }.decisionQuestion p { font-size:12px; }.decisionShell .faces { min-height:120px; }.decisionShell .frontFace h4 { font-size:22px; }.tradeoff { margin-top:12px; }
+ .stack { grid-template-columns:minmax(0,1fr); height:auto; min-height:0; gap:16px; }.libraryHeading { margin-bottom:9px; font-size:10px; }.toolGrid { display:flex; gap:8px; overflow-x:auto; scroll-snap-type:x proximity; }.toolGrid button { flex:none; flex-direction:column; justify-content:center; text-align:center; width:87px; min-height:85px; gap:8px; padding:9px 6px; font-size:11px; line-height:1.3; scroll-snap-align:center; }.toolIcon { width:25px; height:25px; }
+ .toolDetail { padding:20px; min-height:310px; border-radius:16px; }.toolDetailHeader { gap:12px; padding-bottom:17px; }.toolDetailHeader h3 { font-size:23px; }.toolExplanation { margin-top:18px; }.toolExplanation p { font-size:14px; }
+}
+@media(prefers-reduced-motion:reduce) { .viewer *, .viewer *::before, .viewer *::after { transition:none!important; animation:none!important; } }
+
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) { .revealAction:hover .actionIcon svg { transform:translateX(3px); }.decisionShell[data-open="true"] .revealAction:hover .actionIcon svg { transform:rotate(180deg) translateX(3px); } }
+@media(max-width:359px) { .tabs button { font-size:12px; padding:0 4px; }.tabLabel { gap:5px; }.tabLabel svg { width:14px; } }
+
+/* Fit the standard views; the outer reading area remains the accessibility fallback. */
+.viewer [hidden] { display:none!important; }
+.view { display:flex; flex-direction:column; }
+.panel { padding:18px 0; }
+.overviewIntro { margin-bottom:18px; }.overviewIntro h3 { font-size:28px; }.overviewIntro p { font-size:14px; line-height:1.55; margin-top:8px; }
+.decisions { display:flex; flex:1; flex-direction:column; min-height:min-content; }
+.decisionHeading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; flex:none; }.decisionHeading h3 { font-size:23px; line-height:1.3; letter-spacing:-.03em; font-weight:600; }.decisionHeading>button { display:flex; align-items:center; justify-content:center; gap:7px; flex:none; min-height:44px; padding:0 12px; border:1px solid #bcd6d2; border-radius:12px; font-size:12px; color:#126d62; cursor:pointer; transition:background-color .45s,border-color .45s,color .45s; }.decisionHeading>button:hover { background:#eef4f3; }
+.choicesBody { display:flex; flex:1; flex-direction:column; min-height:min-content; }.decisionGrid { flex:1; min-height:min-content; }.decisionSlide { min-width:0; display:flex; }.decisionShell { flex:1; min-width:0; padding:18px; gap:12px; }
+.decisionQuestion { min-height:46px; align-items:center; padding-bottom:10px; gap:8px; }.decisionQuestion p { font-size:13px; color:#365964; white-space:nowrap; }.decisionQuestion .decisionEmblem { width:34px; height:34px; margin:0; }.sealNeedle { transform-origin:32px 32px; transition:transform .45s cubic-bezier(.22,1,.36,1); }.decisionShell[data-open="true"] .sealNeedle { transform:rotate(30deg); }
+.decisionShell .frontFace { text-align:center; align-items:center; }.decisionShell .frontFace h4 { font-size:22px; line-height:1.4; font-weight:500; }.decisionShell .backFace p { font-size:14px; line-height:1.6; color:#254b60; }.tradeoff { margin-top:12px; }.tradeoff p { color:#36586a!important; }.tradeoff>span,.eyebrow { font-size:11px; color:#22695f; }.decisionShell .faces { min-height:135px; }
+.learningPanel { display:flex; flex:1; flex-direction:column; justify-content:center; padding:26px 32px; border-radius:22px; background:var(--surface-ink); color:#f5fbf9; }.lessonIcon { color:#e2c27b; margin-bottom:15px; }.learningPanel h4 { font-size:27px; line-height:1.3; font-weight:500; letter-spacing:-.025em; max-width:27ch; }.learningPanel>p { margin-top:15px; font-size:16px; line-height:1.65; max-width:65ch; }.learningPanel>div { border-top:1px solid #ffffff2b; margin-top:22px; padding-top:18px; }.learningPanel>div>span { color:#bde4d3; font:11px var(--font-fira-code),monospace; }.learningPanel>div>p { margin-top:8px; font-size:14px; line-height:1.6; color:var(--surface-ink-secondary); }
+.libraryHeading { min-height:24px; margin-bottom:8px; font:13px/1.5 var(--font-poppins),sans-serif; }.toolCount { font-variant-numeric:tabular-nums; white-space:nowrap; }.toolGrid { overflow-y:auto; overflow-x:hidden; flex:1; padding:4px; margin:-4px; scrollbar-color:#b5c9ce transparent; }.toolGrid button { min-height:66px; font-size:13px; }.toolDetail { overflow-y:auto; overflow-x:hidden; padding:22px; scrollbar-color:#607c90 transparent; }.stack { min-height:0; height:100%; gap:20px; }.toolExplanation p { font-size:15px; color:#edf2f7; }
+@media(min-width:768px) and (max-width:1023px) { .decisionQuestion { flex-direction:column; gap:5px; min-height:66px; }.decisionQuestion p { font-size:12px; }.decisionShell { padding:14px; }.decisionShell .backFace p { font-size:14px; line-height:1.5; }.decisionShell .frontFace h4 { font-size:21px; } }
+@media(max-width:767px) {
+ .viewer { padding:0 16px; }.header { padding-top:14px; gap:14px; }.thumbnail { display:none; }.identity h2 { font-size:18px; }.identity p { display:none; }.tabs { margin-bottom:12px; }.header>.visit { top:14px; right:68px; }.projectIdentity { min-height:44px; margin-right:52px; }.header:has(>.visit) .projectIdentity { margin-right:104px; }
+ .panel { padding:14px 0; }.overviewIntro { margin-bottom:14px; }.overviewIntro h3 { font-size:23px; max-width:none; }.overviewIntro p { font-size:13px; line-height:1.5; margin-top:7px; }
+ .decisionHeading { margin-bottom:10px; gap:8px; }.decisionHeading h3 { font-size:20px; }.decisionHeading>button { padding:0 9px; font-size:11px; }
+ .choiceSelectors { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:5px; margin-bottom:12px; flex:none; padding:4px; background:#f1f4f7; border:1px solid #d7e1e8; border-radius:13px; }.choiceSelectors button { position:relative; min-height:44px; min-width:0; font-size:12px; font-weight:500; color:#42665f; cursor:pointer; }.choiceSelectors button>span:last-child { position:relative; z-index:1; }.choiceSelectors button[aria-pressed="true"] { color:#095e55; }.choiceMarker { position:absolute; inset:0; background:white; border:1px solid #b1d4c7; border-radius:9px; box-shadow:0 2px 4px #164d3c10; }
+ .decisionGrid { display:grid; grid-template-columns:1fr; gap:0; }.decisionSlide { grid-area:1/1; }.decisionShell { padding:16px; gap:12px; }.decisionShell .frontFace h4 { font-size:23px; }.decisionQuestion { min-height:44px; }.decisionQuestion p { font-size:13px; }.decisionShell .backFace p { font-size:14px; line-height:1.55; }.decisionShell .faces { min-height:120px; }.tradeoff { margin-top:10px; }.revealAction { min-height:46px; font-size:12px; }
+ .learningPanel { padding:22px; }.learningPanel h4 { font-size:24px; }.learningPanel>p { font-size:15px; }.learningPanel>div { margin-top:18px; padding-top:15px; }
+ /* The tabpanel owns mobile scrolling; the catalog and explanation grow naturally. */
+ .stack { display:flex; flex:1; flex-direction:column; height:auto; gap:12px; }.toolLibrary { flex:none; max-height:none; }.libraryHeading { margin-bottom:7px; }.toolGrid { display:grid; flex:none; grid-template-columns:repeat(auto-fit,minmax(min(100%,4.375rem),1fr)); gap:6px; overflow:visible; }.toolGrid button { width:auto; min-width:0; min-height:60px; padding:4px; font-size:12px; line-height:1.25; gap:3px; }.toolGrid .toolIcon { width:22px; height:22px; }.toolDetail { flex:1; padding:14px; min-height:min-content; align-self:stretch; overflow:visible; }.toolDetailHeader { gap:11px; padding-bottom:10px; }.toolDetailHeader h3 { font-size:21px; }.toolDetailHeader p { font-size:11px; }.toolDetailHeader>.toolIcon { width:40px; height:40px; }.toolExplanation { margin-top:10px; }.toolExplanation>span { display:block; font-size:11px; line-height:1.5; }.toolExplanation p { margin-top:6px; font-size:14px; line-height:1.5; }
+}
+@media(max-height:700px) and (max-width:767px) { .panel { padding:10px 0; }.overviewIntro h3 { font-size:21px; }.overviewIntro { margin-bottom:10px; }.decisionHeading h3 { font-size:18px; }.choiceSelectors { margin-bottom:8px; }.decisionShell { padding:13px; gap:9px; }.decisionQuestion { padding-bottom:8px; }.toolDetail { padding:13px; }.toolExplanation { margin-top:10px; }.learningPanel { padding:18px; }.learningPanel h4 { font-size:22px; }.lessonIcon { margin-bottom:10px; }.learningPanel>p { margin-top:12px; line-height:1.5; }.learningPanel>div { margin-top:14px; padding-top:12px; } }
+.learningPanel:not([hidden]),.choicesBody:not([hidden]) { animation:lessonArrival .32s ease-out both; }
+@keyframes lessonArrival { from { opacity:0; } to { opacity:1; } }
+/* One persistent highlight stays in the tab rail, including during dialog entry. */
+.tabs { gap:0; }
+.tabs button { transition:color .35s; }
+
+/* All project views share the same frame, including during a crossfade. */
+.views { position:relative; display:grid; height:100%; min-height:min-content; }
+.view { grid-area:1/1; flex-direction:column; min-width:0; min-height:100%; height:auto; opacity:1; visibility:visible; transform:none; transition:opacity .26s ease,transform .32s cubic-bezier(.22,1,.36,1),visibility .32s; }
+/* Departing tabs retain state and crossfade without contributing an intrinsic height. */
+.view[data-selected="false"] { position:absolute; inset:0; min-height:0; max-height:100%; overflow:clip; pointer-events:none; opacity:0; visibility:hidden; transform:translateY(6px); }
+.decisionSlide { flex-direction:column; }
+@media(max-width:767px) { .decisionGrid { position:relative; }.decisionSlide { grid-area:1/1; } }
+
+/* Share spare mobile space between the card faces and a small footer inset. */
+@media(max-width:767px) {
+ .choicesBody { flex:1; padding-bottom:16px; }
+ .decisionGrid { flex:1; }
+ .decisionShell { padding:18px; gap:16px; }
+ .decisionQuestion p { font-size:14px; white-space:normal; }
+ .decisionShell .faces { min-height:176px; }
+ .decisionShell .backFace { display:flex; flex-direction:column; justify-content:center; }
+ .decisionShell .frontFace h4 { font-size:25px; line-height:1.35; text-wrap:balance; }
+ .decisionShell .backFace p { font-size:16px; line-height:1.6; }
+ .decisionShell .eyebrow,.decisionShell .tradeoff>span { font-size:12px; }
+}
+
+/* Query the fixed dialog frame, so changing browser bars also updates the layout. */
+@container project-frame (max-width:767px) and (max-height:700px) {
+ .header { gap:10px; }
+ .tabs { margin-bottom:8px; }
+ .panel { padding-block:10px; }
+ .decisionHeading { margin-bottom:8px; }
+ .choiceSelectors { margin-bottom:8px; }
+ .choicesBody { padding-bottom:0; }
+ .decisionShell { padding:13px; gap:9px; }
+ .decisionQuestion { padding-bottom:8px; }
+ .decisionShell .faces { min-height:176px; }
+ .toolDetail { padding:13px; }
+ .learningPanel { padding:18px; }
+ .learningPanel>p { margin-top:12px; }
+ .learningPanel>div { margin-top:14px; padding-top:12px; }
+}
+
+/* Keep the complete reasoning and reveal action in view on shorter phones. */
+@container project-frame (max-width:767px) and (max-height:650px) {
+ .decisionShell .backFace p { line-height:1.5; }
+ .decisionShell .eyebrow { margin-bottom:6px; }
+ .stack { gap:10px; }
+ .toolExplanation { margin-top:8px; }
+}
+@media(max-width:767px) { .toolGrid { grid-template-columns:repeat(auto-fit,minmax(min(100%,3.7rem),1fr)); gap:5px; }.toolGrid button { min-height:54px; padding:4px 3px; gap:3px; font-size:10px; line-height:1.2; }.toolGrid .toolIcon { width:20px; height:20px; } }
+/* Tool pages: eight tools per page keep the tiles readable and the frame fitted; a small pager sits in the heading. */
+.toolPager { display:inline-flex; align-items:center; gap:4px; margin-left:auto; }
+.toolPager span { font-size:12px; color:#587a86; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.toolPager button { display:inline-grid; place-items:center; width:30px; height:30px; border:1px solid #d9e6e9; border-radius:9px; background:#fff; color:#254961; cursor:pointer; transition:border-color .25s,background .25s; }
+.toolPager button:hover,.toolPager button:focus-visible { border-color:var(--c-teal-ink); background:#f0f5f5; }
+.toolPager button:disabled { opacity:.35; cursor:default; border-color:#d9e6e9; background:#fff; }
+.toolPager button:focus-visible { outline:2px solid var(--c-teal-ink); outline-offset:2px; }
+@media(max-width:767px) { .toolPager button { width:36px; height:36px; } .toolPager { gap:6px; } }
+.libraryMeta { display:inline-flex; align-items:center; gap:10px; min-width:0; }
+/* Ten tools per page: slightly shorter desktop tiles keep five rows inside the fitted frame. */
+@media(min-width:768px) { .toolGrid button { min-height:60px; padding:9px 12px; }.toolGrid { gap:8px; } }
+/* The tool description sits centred in its box instead of hugging the top, on every screen. */
+.toolDetail { display:flex; flex-direction:column; }
+.toolDetail > div { margin-block:auto; width:100%; }
+@media(max-width:767px) and (min-height:721px) { .toolDetail { padding:20px 16px; }.toolExplanation p { font-size:15px; line-height:1.6; } }
+
+/* Shared geometry at normal text size; enlarged text grows into the reading area. */
+.views { min-height:0; }
+.decisions,.choicesBody,.decisionGrid,.decisionShell { min-height:min-content; }
+.decisionGrid { grid-template-columns:repeat(var(--decision-columns,3),minmax(0,1fr)); }
+.decisionQuestion { flex:none; min-height:48px; }
+.decisionQuestion p { white-space:normal; font-size:14px; }
+.decisionShell .faces { min-height:min-content; overflow:visible; }
+.decisionShell .frontFace { min-height:210px; }
+.decisionShell .backFace { display:flex; flex-direction:column; justify-content:center; overflow:visible; }
+.decisionShell .frontFace h4 { font-size:23px; text-wrap:balance; }
+.decisionShell .backFace p { font-size:14px; line-height:1.6; }
+.decisionShell .tradeoff { border-left:0; border-top:1px solid #d6e5e4; padding:12px 0 0; margin-top:12px; }
+/* Grid capacity is measured from these dimensions; labels keep a fixed icon slot. */
+.toolGrid { --tool-row-height:78px; display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,6rem),1fr)); grid-auto-rows:var(--tool-row-height); gap:8px; padding:0; margin:0; overflow:visible; align-content:start; }
+.toolGrid button { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:7px; width:auto; min-width:0; min-height:var(--tool-row-height); height:100%; padding:8px 4px; font-size:12px; line-height:1.3; text-align:center; }
+.toolGrid .toolIcon { width:28px; height:28px; }
+.toolLabel { display:block; white-space:nowrap; }
+.toolPager button { width:44px; height:44px; }
+.toolIcon img { width:100%; height:100%; object-fit:contain; }
+.toolDetailHeader h3 { overflow-wrap:normal; }
+.toolExplanation p { line-height:1.6; }
+@media(max-width:767px) {
+ .decisionGrid { grid-template-columns:minmax(0,1fr); }
+ .decisionShell .faces { min-height:min-content; }
+ .decisionShell .frontFace { min-height:220px; }
+ .decisionShell .backFace p { font-size:15px; line-height:1.55; }
+ .toolGrid { --tool-row-height:66px; grid-template-columns:repeat(auto-fill,minmax(min(100%,5.25rem),1fr)); gap:6px; }
+ .toolGrid button { font-size:12px; gap:5px; padding:5px 3px; }
+ .toolGrid .toolIcon { width:25px; height:25px; }
+ .toolDetail { flex:1; min-height:min-content; }
+}
+@container project-frame (max-width:767px) and (max-height:700px) {
+ .decisionShell .frontFace { min-height:176px; }
+}
+
+/* Concise explanations fit the frame; only the outer panel can grow for zoom. */
+.toolGrid { --tool-max-rows:2; }
+.toolDetail { overflow:visible; padding:20px; }
+.toolDetailHeader { padding-bottom:16px; }
+.toolExplanation { margin-top:16px; }
+.toolExplanation p { font-size:15px; line-height:1.55; }
+@media(max-width:767px) {
+ .libraryMeta { gap:8px; }
+ .toolDetail { padding:16px; }
+ .toolDetailHeader { padding-bottom:10px; }
+ .toolDetailHeader h3 { font-size:21px; }
+ .toolExplanation { margin-top:12px; }
+ .toolExplanation p { margin-top:5px; font-size:14px; line-height:1.5; }
+}
+@container project-frame (max-width:767px) and (max-height:670px) {
+ .toolGrid { --tool-max-rows:1; }
+ .toolDetail { padding:12px; }
+}
+@media(max-width:359px) { .toolDetail { padding:12px; } }

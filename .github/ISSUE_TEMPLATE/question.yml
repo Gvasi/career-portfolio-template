@@ -1,0 +1,19 @@
+name: Question or idea
+description: Ask about customisation or share an idea for the template.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Start with the setup and customisation guides in docs/. Please keep credentials and private personal details out of your question.
+  - type: textarea
+    id: question
+    attributes:
+      label: What would you like to do?
+      description: A little context helps. Include the relevant page or file if you know it.
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What have you tried?
+      description: Optional links or screenshots can help explain the question.

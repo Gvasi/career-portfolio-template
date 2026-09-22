@@ -1,0 +1,799 @@
+@import "tailwindcss" source("../");
+
+/* ===== Tailwind v4 Theme Extensions ===== */
+@theme {
+  --breakpoint-xs: 360px;     /* Small phones */
+  --breakpoint-sm-plus: 412px; /* Large phones: S24 Ultra, iPhone Pro Max */
+}
+
+/* ===== Scrollbar hide utility ===== */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== CTA utilities ===== */
+.cta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem
+}
+
+@media (max-width:520px) {
+  .cta-grid {
+    grid-template-columns: 1fr
+  }
+}
+
+.term {
+  margin: 0.625rem auto 0;
+  max-width: 100%;
+  border-radius: 1rem;
+  background: #fbfbfb;
+  padding: 1.125rem 1.25rem;
+  box-shadow: 0 0.625rem 1.875rem rgba(2, 8, 23, .06);
+  font: 1rem/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: pre;
+  overflow: auto;
+  text-align: left
+}
+
+.caret {
+  display: inline-block;
+  width: .6ch;
+  height: 1em;
+  background: #22c55e;
+  vertical-align: -10%
+}
+
+/* tap target for social icons */
+.chip {
+  inline-size: 48px;
+  block-size: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px
+}
+
+/* Project touch-target floor: 44x44px. */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Design System: Typography & Spacing Scale */
+html {
+  font-size: calc(16px * var(--global-scale, 1));
+  /* Fluid rem sizing */
+  overflow-x: clip;
+  /* Prevent horizontal scroll globally */
+  /* Safe area insets for notched devices */
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+  background: var(--c-navy);
+}
+
+:root {
+  /* Shared ink surface for focused tool notes and project experiences. */
+  --surface-ink: linear-gradient(145deg, #17334f 0%, #102940 48%, #0c2239 100%);
+  --surface-ink-secondary: #c9d6e2;
+  /* Fixed at 1; kept so rem geometry and section rhythm keep their existing multiplier. */
+  --global-scale: 1;
+  /* Site-wide content width - tighter for premium content island aesthetic */
+  --page-max: 90rem;
+
+  /* Color System */
+  --c-bg: #ffffff;
+  --c-text: #1A1A1A;
+  --c-primary: #1FAE9E;
+  --c-primary-dark: #159083;
+  --c-navy: #06254A;
+
+  /* Glow Shadow System - Brand-consistent accent glows */
+  --glow-primary-sm: 0 0 8px rgba(31, 174, 158, 0.25);
+  --glow-primary-md: 0 0 16px rgba(31, 174, 158, 0.35);
+  --glow-primary-lg: 0 0 24px rgba(31, 174, 158, 0.45);
+  --glow-navy-sm: 0 0 8px rgba(6, 37, 74, 0.15);
+  --glow-navy-md: 0 0 16px rgba(6, 37, 74, 0.25);
+  --glow-navy-lg: 0 0 24px rgba(6, 37, 74, 0.35);
+
+  /* Spacing Scale (rem-based) */
+  --space-xs: 0.25rem;
+  /* 4px */
+  --space-sm: 0.5rem;
+  /* 8px */
+  --space-md: 0.75rem;
+  /* 12px */
+  --space-lg: 1rem;
+  /* 16px */
+  --space-xl: 1.5rem;
+  /* 24px */
+  --space-2xl: 2rem;
+  /* 32px */
+  --space-3xl: 3rem;
+  /* 48px */
+  --space-4xl: 4rem;
+  /* 64px */
+  --space-5xl: 6rem;
+  /* 96px */
+
+  /* Typography Scale (rem-based) */
+  --text-xs: 0.8125rem;
+  /* 13px */
+  --text-sm: 0.875rem;
+  /* 14px */
+  --text-base: 1rem;
+  /* 16px */
+  --text-lg: 1.125rem;
+  /* 18px */
+  --text-xl: 1.25rem;
+  /* 20px */
+  --text-2xl: 1.5rem;
+  /* 24px */
+  --text-3xl: 1.875rem;
+  /* 30px */
+  --text-4xl: 2.25rem;
+  /* 36px */
+  --text-5xl: 3rem;
+  /* 48px */
+  --text-6xl: 3.75rem;
+  /* 60px */
+
+  /* 2026 Fluid Typography Scale (Apple HIG + Material Design 3) */
+  /* H1: 28-48px - Display headlines */
+  --fluid-h1: clamp(1.75rem, 4vw + 0.5rem, 3rem);
+  /* H2: 22-36px - Section titles */
+  --fluid-h2: clamp(1.375rem, 3vw + 0.5rem, 2.25rem);
+  /* H3: 18-30px - Card titles */
+  --fluid-h3: clamp(1.125rem, 2.5vw + 0.5rem, 1.875rem);
+  /* H4: 16-24px - Subsections */
+  --fluid-h4: clamp(1rem, 2vw + 0.5rem, 1.5rem);
+  /* Body: 16-18px - NEVER below 16px (Apple HIG minimum) */
+  --fluid-p: clamp(1rem, 0.5vw + 0.875rem, 1.125rem);
+  /* Small/Caption: 14-16px - Labels, metadata */
+  --fluid-small: clamp(0.875rem, 0.25vw + 0.8rem, 1rem);
+  /* Micro: 13-14px - Absolute minimum for tertiary UI */
+  --fluid-micro: clamp(0.8125rem, 0.2vw + 0.75rem, 0.875rem);
+
+  /* Line Heights (Apple standard) */
+  --leading-display: 1.1;   /* Large headlines */
+  --leading-tight: 1.2;     /* Headings */
+  --leading-snug: 1.3;      /* Subheadings */
+  --leading-normal: 1.5;    /* Body copy */
+  --leading-relaxed: 1.625; /* Long-form reading */
+
+  /* Letter Spacing */
+  --tracking-tight: -0.025em;  /* Display text */
+  --tracking-normal: 0;        /* Body */
+  --tracking-wide: 0.01em;     /* Small text for legibility */
+
+  /* 2026 Fluid Container Padding (responsive to viewport) */
+  --container-px: clamp(1rem, 5vw, 1.5rem);      /* 16-24px */
+  --container-px-lg: clamp(1.5rem, 6vw, 2rem);   /* 24-32px for tablets */
+
+  /* 2026 Fluid Card Padding (scales with screen) */
+  --card-padding: clamp(1rem, 4vw, 1.5rem);      /* 16-24px */
+  --card-padding-lg: clamp(1.25rem, 5vw, 2rem);  /* 20-32px */
+  --card-gap: clamp(0.75rem, 3vw, 1rem);         /* 12-16px internal gaps */
+
+  /* Transitions */
+  --t: 250ms ease-in-out;
+
+  /* Responsive typography scale */
+  --text-xs-responsive: clamp(0.8125rem, 2vw, 0.875rem);
+  --text-sm-responsive: clamp(0.875rem, 2.5vw, 1rem);
+  --text-base-responsive: clamp(1rem, 3vw, 1.125rem);
+
+  /* Responsive spacing scale */
+  --space-section-mobile: clamp(1.5rem, 4vw, 2rem);
+  --space-section-desktop: clamp(5rem, 8vw, 7.5rem);
+
+  /* 2025 SEO-Optimized Section Spacing (rem-first approach) */
+  --space-section-xs: 1rem;
+  /* 16px - Mobile small */
+  --space-section-sm: 2rem;
+  /* 32px - Mobile large */
+  --space-section-md: 3rem;
+  /* 48px - Tablet */
+  --space-section-lg: 4rem;
+  /* 64px - Desktop */
+  --space-section-xl: 6rem;
+  /* 96px - Desktop large */
+
+  /* 2025 Heading Spacing Variables (8px grid) */
+  --heading-mb-xs: 1rem;
+  /* 16px - Mobile */
+  --heading-mb-md: 1.5rem;
+  /* 24px - Tablet */
+  --heading-mb-lg: 2rem;
+  /* 32px - Desktop */
+
+  /* 2025 Grid Gap Variables (8px grid) */
+  --grid-gap-xs: 1rem;
+  /* 16px - Mobile */
+  --grid-gap-md: 1.5rem;
+  /* 24px - Tablet */
+  --grid-gap-lg: 2rem;
+  /* 32px - Desktop */
+
+  /* Fluid vertical rhythm */
+  --section-gap-base: clamp(2rem, 6vw, 3rem);
+  --section-gap-fluid: calc(var(--section-gap-base) * var(--global-scale));
+  --section-padding: calc(clamp(3rem, 5vw, 5.5rem) * var(--global-scale));
+
+  /* Diagram sizing for HowIWork - responsive to viewport height */
+  --diagram-size: 600px;
+  --diagram-panel-height: 640px;
+
+  /* Legacy */
+  --cta-gap: var(--space-lg);
+}
+
+/* Wider global container (approx +15% per side) */
+.container {
+  width: min(100%, var(--page-max));
+  max-width: min(100%, var(--page-max));
+}
+
+/* Typography System - Using Fluid Scale */
+h1 {
+  font-size: var(--fluid-h1);
+  line-height: var(--leading-tight);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: var(--fluid-h2);
+  line-height: var(--leading-tight);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: var(--fluid-h3);
+  line-height: var(--leading-tight);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: var(--fluid-h4);
+  line-height: var(--leading-normal);
+  font-weight: 600;
+}
+
+p {
+  font-size: var(--fluid-p);
+  line-height: var(--leading-normal);
+  letter-spacing: 0.01em;
+}
+
+/* Global Styles */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-poppins), sans-serif;
+  background-color: var(--c-bg);
+  color: var(--c-text);
+  /* 2026: Base 16px minimum, scales up on larger viewports */
+  font-size: var(--fluid-p);
+  line-height: var(--leading-normal);
+  background-image: none;
+  /* Fluid horizontal padding for all content */
+  --page-px: var(--container-px);
+}
+
+/* Media elements never overflow */
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.mono {
+  font-family: var(--font-fira-code), ui-monospace, Menlo, Consolas, monospace;
+}
+
+*,
+*::before,
+*::after {
+  transition: background-color var(--t), color var(--t), border-color var(--t), transform 150ms ease;
+}
+
+/* Accessibility */
+.skip-link {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  max-width: calc(100% - 32px);
+  transform: translateY(calc(-100% - 20px));
+  opacity: 0;
+  pointer-events: none;
+  clip-path: inset(50%);
+  background: var(--c-navy);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+  z-index: 1000;
+  transition: opacity .16s, transform .22s ease-out;
+}
+
+.skip-link:focus-visible {
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+  clip-path: none;
+  outline: 2px solid var(--c-teal-ink);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) { .skip-link { transition: none; } }
+
+/* Component Styles - Using Design System */
+
+/* Button System */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  border-radius: 9999px;
+  padding: var(--space-md) var(--space-xl);
+  border: 2px solid transparent;
+  transition: all var(--t);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--c-navy);
+  color: #fff;
+  border-color: var(--c-navy);
+}
+
+.btn-primary:hover {
+  background: var(--c-primary);
+  border-color: var(--c-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(31, 174, 158, 0.25);
+}
+
+.btn-emerald {
+  background: var(--c-teal-ink);
+  color: #fff;
+  font-weight: 700;
+  border-color: var(--c-teal-ink);
+}
+
+.btn-emerald:hover {
+  background: #0d7267;
+  border-color: #0d7267;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(21, 144, 131, 0.25);
+}
+
+.btn-outline {
+  border-color: var(--c-navy);
+  color: var(--c-navy);
+  background: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-outline:hover {
+    border-color: var(--c-primary);
+    background: var(--c-primary);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(31, 174, 158, 0.25);
+  }
+}
+
+/* Social Components */
+.chip {
+  width: calc(var(--space-2xl) + var(--space-sm));
+  /* 2.25rem equivalent */
+  height: calc(var(--space-2xl) + var(--space-sm));
+  border-radius: 9999px;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: var(--c-navy);
+  transition: all var(--t);
+}
+
+.chip:hover {
+  background: var(--c-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(31, 174, 158, 0.25);
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.reveal-show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .9s ease, transform .9s ease;
+}
+
+/* Staggered card animations */
+.reveal-card {
+  opacity: 0;
+  transform: translateX(-48px) translateY(14px);
+  will-change: transform, opacity;
+}
+
+.reveal-card-show {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+  transition: opacity .75s cubic-bezier(.25, 1, .5, 1), transform .9s cubic-bezier(.25, 1, .5, 1);
+}
+
+.reveal-card-1 {
+  transition-delay: 0.2s;
+}
+
+.reveal-card-2 {
+  transition-delay: 0.4s;
+}
+
+.reveal-card-3 {
+  transition-delay: 0.6s;
+}
+
+.reveal-card-4 {
+  transition-delay: 0.8s;
+}
+
+/* CTA */
+.cta {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.cta .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .25));
+}
+
+.cta .inner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: white;
+  padding: 0 1rem;
+}
+
+.cta-anim {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.cta-anim.cta-show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .8s ease, transform .8s ease;
+}
+
+/* Testimonial fade-up */
+.reveal-fade-up {
+  opacity: 0;
+  transform: translateY(42px);
+  will-change: transform, opacity;
+}
+
+.reveal-fade-up-show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .75s cubic-bezier(.25, 1, .5, 1), transform .9s cubic-bezier(.25, 1, .5, 1);
+}
+
+/* Footer */
+footer {
+  background: var(--c-navy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .c-avatar {
+    animation: none !important;
+  }
+
+  .c-flipper,
+  .c-avatar:hover .c-flipper,
+  .c-flipper.is-flipped,
+  .c-flipper.is-auto-flipping {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .c-avatar::before,
+  .c-avatar::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Keep base transform so front/back orientation preserved; allow hover flip */
+}
+
+/* Desktop-only CTA button */
+.desktop-only-cta {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktop-only-cta {
+    display: inline-flex !important;
+  }
+}
+
+/* GPU Acceleration for smooth animations */
+.transform-gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+/* Hardware acceleration optimization */
+.motion-element {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Utility to fence misbehaving children */
+.no-x-overflow {
+  overflow-x: clip;
+  contain: layout paint;
+}
+
+.section-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap-fluid);
+}
+
+.section-shell {
+  padding-block: var(--section-padding);
+}
+
+.edge-to-edge {
+  width: 100vw;
+  max-width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+.section-title {
+  font-size: var(--fluid-h2);
+  line-height: var(--leading-tight);
+  font-weight: 800;
+  letter-spacing: var(--tracking-tight);
+}
+
+.section-subtitle {
+  font-size: clamp(1.25rem, 1.8vw, 1.54rem);
+  line-height: var(--leading-relaxed);
+  color: #4b5563;
+}
+
+/* Typography is now handled by fluid clamp() variables in :root
+   See --fluid-h1, --fluid-h2, etc. for responsive sizing
+   This eliminates the need for breakpoint-based !important overrides */
+
+/* Custom Animations for How I Work */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.animate-pop-in {
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ===== Viewport Height Responsive Scaling ===== */
+/* For constrained viewport heights (14" laptops at 125-150% scaling) */
+
+/* Medium constraint: 850px and below */
+@media (max-height: 850px) {
+  :root {
+    --section-padding: calc(clamp(2rem, 4vw, 4rem) * var(--global-scale));
+    --diagram-size: 520px;
+    --diagram-panel-height: 560px;
+  }
+
+  .section-shell {
+    padding-block: calc(var(--section-padding) * 0.85);
+  }
+}
+
+/* Tight constraint: 700px and below (very constrained viewports) */
+@media (max-height: 700px) {
+  :root {
+    --section-padding: calc(clamp(1.5rem, 3vw, 3rem) * var(--global-scale));
+    --diagram-size: 450px;
+    --diagram-panel-height: 480px;
+  }
+
+  .section-shell {
+    padding-block: calc(var(--section-padding) * 0.75);
+  }
+
+  /* Reduce section title size on very constrained viewports */
+  .section-title {
+    font-size: clamp(1.25rem, 2.4vw, 2rem);
+  }
+}
+
+/* ===== XS Mobile Adjustments (<375px) ===== */
+@media (max-width: 767px) {
+  :root {
+    --section-gap-base: clamp(2rem, 8vw, 2.5rem);
+    --section-padding: clamp(2.25rem, 6vw, 3.75rem);
+  }
+}
+
+@media (max-width: 374px) {
+  :root {
+    --section-gap-fluid: 1.875rem;
+  }
+
+  .section-shell {
+    padding-block: 1.75rem;
+  }
+
+  /* Tighter container padding */
+  .container {
+    padding-inline: 0.75rem;
+  }
+}
+
+/* ===== Sticky Header Safe Area ===== */
+header.sticky,
+header[class*="sticky"] {
+  top: env(safe-area-inset-top, 0);
+}
+
+/* Contact uses one responsive form so viewport changes never reset its state. */
+.contact-page p { font-size: 0.9375rem; line-height: 1.7; }
+.contact-page p.text-xs { font-size: 0.75rem; line-height: 1.6; }
+.contact-page p.text-sm { font-size: 0.875rem; line-height: 1.65; }
+.contact-page h1 { font-size: clamp(1.8rem, 3vw, 2.7rem); line-height: 1.12; }
+.contact-page h2 { font-size: clamp(1.2rem, 2vw, 1.55rem); line-height: 1.3; }
+.contact-page :is(input, textarea) { font-size: 1rem; }
+.contact-page :is(button, a):focus-visible { outline: 2px solid var(--c-teal-ink); outline-offset: 4px; }
+
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+
+/* Motion scroll measurements use the document as their positioned container. */
+html { position:relative; }
+
+/* Text teal retains the brand hue while meeting contrast on white. */
+.hero-lockup-name, .hero-outcome-word { color:var(--c-teal-ink); }
+
+/* Launch refinement: consistent, responsive interaction treatments. */
+
+html[data-page-hidden="true"] *,html[data-page-hidden="true"] *::before,html[data-page-hidden="true"] *::after,
+section[data-motion-paused="true"] *,section[data-motion-paused="true"] *::before,section[data-motion-paused="true"] *::after { animation-play-state:paused !important; }
+
+/* Native dialogs sit above navigation and keep the page exactly where it was. */
+.interactive-dialog { position:fixed; inset:0; margin:auto; height:fit-content; width:min(1080px,calc(100% - 48px)); max-width:none; max-height:calc(100dvh - 64px); padding:0; border:1px solid #ffffff70; border-radius:24px; background:transparent; color:var(--c-navy); overflow:visible; box-shadow:0 40px 100px #03182b66; }
+.interactive-dialog::backdrop { background:rgba(3,19,37,.58); backdrop-filter:blur(8px); animation:dialog-backdrop .3s ease both; }
+.dialog-surface { position:relative; max-height:calc(100dvh - 64px); overflow:auto; overscroll-behavior:contain; border-radius:inherit; background:#fff; scrollbar-width:thin; }
+.interactive-dialog[open] { animation:dialog-arrive .45s cubic-bezier(.16,1,.3,1) both; }
+.interactive-dialog[data-closing="true"] { animation:dialog-leave .18s ease both; }
+.interactive-dialog[data-closing="true"]::backdrop { animation:dialog-backdrop .18s ease reverse both; }
+.dialog-close { position:sticky; float:right; top:16px; margin:16px 16px -60px 0; z-index:5; }
+.dialog-icon-button { display:grid; place-items:center; flex-shrink:0; width:44px; height:44px; padding:0; border:1px solid #dce4e9; border-radius:50%; background:linear-gradient(155deg,#fafcfd,#f0f3f6); box-shadow:inset 0 1px #fff,0 2px 4px -3px #06254a26; color:#26465d; cursor:pointer; transition:background-color .22s,border-color .22s,color .22s,transform .18s cubic-bezier(.22,1,.36,1); }
+.dialog-icon-button svg { width:20px; height:20px; stroke-width:1.75; }
+.dialog-close svg { width:18px; height:18px; }
+.dialog-icon-button:active { transform:scale(.95); border-color:#8fa8b8; }
+@media(hover:hover) and (pointer:fine) { .dialog-icon-button:hover { border-color:#98aebb; background:#edf3f6; color:var(--c-navy); } }
+.interactive-dialog :is(button,a,input):focus-visible { outline:3px solid var(--c-teal-ink); outline-offset:3px; }
+.interactive-dialog .dialog-icon-button:focus-visible { outline:2px solid var(--c-teal-ink); outline-offset:2px; }
+@media(prefers-reduced-motion:reduce) { .dialog-icon-button { transition:none; }.dialog-icon-button:active { transform:none; } }
+@keyframes dialog-arrive { from { opacity:.2; transform:translateY(32px) scale(.96); } to { opacity:1; transform:none; } }
+@keyframes dialog-leave { to { opacity:0; transform:translateY(12px) scale(.985); } }
+@keyframes dialog-backdrop { from { opacity:0; } to { opacity:1; } }
+@keyframes panel-arrive { from { opacity:.25; transform:translateY(12px); } to { opacity:1; transform:none; } }
+@media(max-width:767px) {
+  .interactive-dialog { width:calc(100% - 24px); max-height:calc(100dvh - 24px); border-radius:18px; }
+  .dialog-surface { max-height:calc(100dvh - 24px); }
+  .dialog-close { top:10px; margin:10px 10px -54px 0; }
+}
+@media(prefers-reduced-motion:reduce) { .interactive-dialog[open],.interactive-dialog[data-closing="true"],.interactive-dialog::backdrop { animation:none !important; opacity:1; transform:none; filter:none; } }
+
+/* Shared reading roles: bounded by content, never by forced word splitting. */
+:root {
+  --type-label: max(13px, .8125rem);
+  --type-caption: max(14px, .875rem);
+  --type-body: max(16px, 1rem);
+  --font-ui: var(--font-poppins), sans-serif;
+  --font-code: var(--font-fira-code), monospace;
+  --c-teal-ink: #118578;
+}
+h1, h2, h3 { text-wrap:balance; word-break:normal; hyphens:none; }
+p { text-wrap:pretty; }
+button, input, textarea, select { font-family:var(--font-ui); }
+input, textarea { caret-color:var(--c-teal-ink); }
+/* Shared section-label role; local gold identifies the qualifications collection. */
+.section-eyebrow,
+.contact-page .section-eyebrow,
+.about-experience :is(.ae-hero-copy,.ae-journey-heading) .ae-eyebrow.section-eyebrow {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  margin:0 0 12px; font-family:var(--font-poppins),sans-serif;
+  font-size:13px; line-height:1.5; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase; color:#60738a;
+}
+.section-eyebrow > svg { width:16px; height:16px; flex:none; color:var(--c-teal-ink); }
+.section-eyebrow.section-eyebrow--start,
+.about-experience .ae-eyebrow.section-eyebrow--start { justify-content:flex-start; }
+.section-eyebrow.section-eyebrow--gold { color:#896713; }
+.section-eyebrow.section-eyebrow--inverse { color:#b4d9d6; }
